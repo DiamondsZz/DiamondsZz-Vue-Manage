@@ -1,1 +1,1 @@
-# DiamondsZz-vue-manage
+# diamondszz-vue-manage
