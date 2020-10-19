@@ -1,5 +1,5 @@
 {
-  "name": "diamondszz-vue-manage",
+  "name": "dz-vue-manage",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/DiamondsZz/DiamondsZz-Vue-Manage/issues"
   },
-  "homepage": "https://github.com/DiamondsZz/DiamondsZz-Vue-Manage#readme"
+  "homepage": "https://github.com/DiamondsZz/DiamondsZz-Vue-Manage#readme",
+  "dependencies": {
+    "yeoman-generator": "^4.12.0"
+  }
 }
