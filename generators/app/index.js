@@ -22,15 +22,34 @@ module.exports = class extends Generator {
 
   //generator的输出方法
   writing() {
-    //模板文件的路径
-    const templatePath = this.templatePath("test.txt");
-    //输出文件的路径
-    const outputPath = this.destinationPath("test.txt");
-
     //模板数据上下文
     const context = this.answers;
 
-    //输出模板
-    this.fs.copyTpl(templatePath, outputPath, context);
+    //模板文件路径数组
+    const templateArr = [
+      "public/index.html",
+      "src/api/index.js",
+      "src/assets/css/common.css",
+      "src/assets/js/common.js",
+      "src/components/Main.vue",
+      "src/filters/index.js",
+      "src/plugins/index.js",
+      "src/router/index.js",
+      "src/router/routes.js",
+      "src/store/index.js",
+      "src/utils/index.js",
+      "src/views/login/login.vue",
+      "package.json",
+      "vue.config.js",
+    ];
+
+    for (let template of templateArr) {
+      //输出模板
+      this.fs.copyTpl(
+        this.templatePath(template),
+        this.destinationPath(template),
+        context
+      );
+    }
   }
 };
