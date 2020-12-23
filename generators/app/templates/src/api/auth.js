@@ -1,5 +1,5 @@
 import request from "@/utils/request";
-export function handletList(params) {
+export function login(params) {
   return new Promise(async (resolve, reject) => {
     let res = await request.get("", params);
     if (res.status === 200) {

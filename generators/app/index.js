@@ -1,7 +1,9 @@
 const Generator = require("yeoman-generator");
 
 //generator入口文件
-module.exports = class extends Generator {
+module.exports = class extends (
+  Generator
+) {
   //接受用户输入
   prompting() {
     return this.prompt([
@@ -28,17 +30,25 @@ module.exports = class extends Generator {
     //模板文件路径数组
     const templateArr = [
       "public/index.html",
-      "src/api/index.js",
+      "src/api/auth.js",
       "src/assets/css/common.css",
-      "src/assets/js/common.js",
-      "src/components/Main.vue",
+      "src/components/Menu.vue",
+      "src/components/Logo.vue",
+      "src/components/TipModal.vue",
+      "src/components/Layout.vue",
+      "src/components/User.vue",
       "src/filters/index.js",
       "src/plugins/index.js",
+      "src/plugins/ant-design-vue.js",
+      "src/plugins/vue-ls.js",
       "src/router/index.js",
-      "src/router/routes.js",
       "src/store/index.js",
-      "src/utils/index.js",
-      "src/views/login/login.vue",
+      "src/store/initStore.js",
+      "src/store/modules/user.js",
+      "src/utils/common.js",
+      "src/utils/request.js",
+      ".env.dev",
+      ".env.prod",
       "package.json",
       "vue.config.js",
     ];
