@@ -37,6 +37,13 @@ module.exports = class extends (
       "src/components/TipModal.vue",
       "src/components/Layout.vue",
       "src/components/User.vue",
+	  "src/components/Table.vue",
+	  "src/components/Search.vue",
+	  "src/components/Upload.vue",
+	  "src/components/VerificationCode.vue",
+	  "src/components/Form.vue",
+	  "src/components/Area/area.vue",
+	  "src/components/Area/area.js",
       "src/filters/index.js",
       "src/plugins/index.js",
       "src/plugins/ant-design-vue.js",
@@ -47,10 +54,12 @@ module.exports = class extends (
       "src/store/modules/user.js",
       "src/utils/common.js",
       "src/utils/request.js",
+	  "src/utils/util.js",
       ".env.dev",
       ".env.prod",
       "package.json",
       "vue.config.js",
+	  "prettier.config.js",
     ];
 
     for (let template of templateArr) {
