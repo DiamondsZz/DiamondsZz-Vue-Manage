@@ -12,7 +12,7 @@
 			v-model="elementSelectVisible"
 			:getContainer="() => mountModal('.select-element')"
 		>
-			<div class="select-modal-action">
+			<div class="select-modal-action" v-if="$attrs.isDisplaySearch">
 				<div class="select-modal-action-search">
 					<a-input
 						v-model="searchVal"
@@ -70,8 +70,13 @@
 import { mountModal } from '@/utils/common'
 export default {
 	props: {
-		data: Array,
-		required: true
+		data: {
+			type: Array,
+			required: true
+		},
+		initialValue: {
+			type: Array
+		}
 	},
 	data() {
 		return {
@@ -93,8 +98,6 @@ export default {
 		},
 		//获取到数据后
 		afterGetData() {
-			this.elementSelectVisible = true
-
 			//元素选择状态设置
 			for (let element of this.elements) {
 				if (element.value.length > 0) {
@@ -123,7 +126,7 @@ export default {
 		},
 		// 元素选择
 		elementSelect(elementItem, elementItemIndex, elementIndex) {
-			if (elementItem.checked === undefined) {
+			if (!elementItem.checked) {
 				this.$set(elementItem, 'checked', true)
 			} else {
 				this.$set(elementItem, 'checked', !elementItem.checked)
@@ -194,9 +197,18 @@ export default {
 	watch: {
 		data(data) {
 			this.elements = data
-			this.afterGetData()
+			this.elementSelectVisible = true
+		},
+		//初始值
+		initialValue: {
+			handler(val) {
+				this.elementsSelected = val
+				this.afterGetData()
+			},
+			immediate: true
 		}
-	}
+	},
+	created() {}
 }
 </script>
 

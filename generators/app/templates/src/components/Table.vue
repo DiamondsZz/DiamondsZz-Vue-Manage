@@ -64,7 +64,7 @@
 
 				<!--时间处理-->
 				<div v-else-if="item.des && item.des.isTime">
-					<div>{{ Day(text).format('YYYY-MM-DD HH:mm') }}</div>
+					<div>{{ text ? Day(text).format('YYYY-MM-DD HH:mm') : '暂无数据' }}</div>
 				</div>
 				<!--图片-->
 				<div v-else-if="item.des && item.des.isImg">
@@ -105,33 +105,25 @@
 							cancel-text="否"
 							@confirm="action"
 						>
-							<span
-								v-if="record.status === 0"
-								class="table-action-item table-action-agree"
-								>同意</span
-							><span
-								v-else-if="record.status === 1"
-								class="table-action-item table-action-refuse"
+							<span v-if="record.status === 0" class="table-action-item">同意</span
+							><span v-else-if="record.status === 1" class="table-action-item"
 								>拒绝</span
 							>
 						</a-popconfirm>
 						<span v-if="record.status === 2">暂无</span>
 					</div>
 					<div v-if="item.des && item.des.actionType === 2">
-						<a-button class="table-action-item table-action-details" type="primary"
-							>查看详情</a-button
-						>
+						<a-button class="table-action-item" type="primary">查看详情</a-button>
 						<a-popconfirm title="是否结束?" ok-text="是" cancel-text="否">
-							<span class="table-action-item table-action-end">结束</span>
+							<span class="table-action-item">结束</span>
 						</a-popconfirm>
 					</div>
 
+					<!--剧本-->
 					<div v-if="item.des && item.des.actionType === 3">
 						<span class="table-action-item diamonds-green" @click="action(3, 1, record)"
 							>开始执行</span
-						><span
-							class="table-action-item table-action-edit diamonds-blue"
-							@click="action(3, 2, record)"
+						><span class="table-action-item diamonds-blue" @click="action(3, 2, record)"
 							>编辑</span
 						>
 						<a-popconfirm
@@ -143,6 +135,7 @@
 							<span class="table-action-item diamonds-red">删除</span>
 						</a-popconfirm>
 					</div>
+					<!---->
 					<div v-if="item.des && item.des.actionType === 4">
 						<a-popconfirm
 							title="是否确定?"
@@ -155,11 +148,9 @@
 					</div>
 
 					<div v-if="item.des && item.des.actionType === 5">
-						<a-button class="table-action-item table-action-details" type="primary"
-							>查看详情</a-button
-						>
+						<a-button class="table-action-item" type="primary">查看详情</a-button>
 						<a-popconfirm title="是否下架?" ok-text="是" cancel-text="否">
-							<span class="table-action-item table-action-sold">下架</span>
+							<span class="table-action-item">下架</span>
 						</a-popconfirm>
 					</div>
 
@@ -176,11 +167,44 @@
 							cancel-text="否"
 							@confirm="action(6, 2, record)"
 						>
-							<span class="table-action-item table-action-delete diamonds-red"
-								>删除</span
-							>
+							<span class="table-action-item diamonds-red">删除</span>
 						</a-popconfirm>
 					</div>
+
+					<!--淘礼金-->
+					<div v-if="item.des && item.des.actionType === 7">
+						<a-popconfirm
+							title="是否发布活动?"
+							ok-text="是"
+							cancel-text="否"
+							@confirm="action(6, 1, record)"
+						>
+							<a-button class="table-action-item" type="primary">发布活动</a-button>
+						</a-popconfirm>
+
+						<span class="table-action-item diamonds-blue" @click="action(6, 2, record)"
+							>查看详情</span
+						>
+
+						<a-popconfirm
+							title="是否结束?"
+							ok-text="是"
+							cancel-text="否"
+							@confirm="action(6, 3, record)"
+						>
+							<span class="table-action-item diamonds-red">结束</span>
+						</a-popconfirm>
+
+						<a-popconfirm
+							title="是否删除?"
+							ok-text="是"
+							cancel-text="否"
+							@confirm="action(6, 4, record)"
+						>
+							<span class="table-action-item diamonds-red">删除</span>
+						</a-popconfirm>
+					</div>
+					<!---->
 				</div>
 			</div>
 		</a-table>
@@ -204,6 +228,10 @@ export default {
 			//1   同意1拒绝2
 			//2   查看详情1结束2
 			//3   开始执行1辑2删除3
+			//4   删除
+			//5   查看详情  下架
+			//6   编辑 删除
+			//7   发布活动 查看详情 结束 删除
 			this.$emit('action', {
 				actionType,
 				index,
@@ -244,6 +272,7 @@ export default {
 	.table-action-item {
 		font-weight: 500;
 		cursor: pointer;
+		margin-left: 20px;
 	}
 	.table-action-agree {
 		color: #177dff;
@@ -252,18 +281,14 @@ export default {
 		color: #ff415c;
 	}
 	.table-action-end {
-		margin-left: 20px;
 		color: #ff415c;
 	}
 	.table-action-edit {
-		margin: 0 20px;
 	}
 	.table-action-sold {
 		color: #177dff;
-		margin-left: 20px;
 	}
 	.table-action-delete {
-		margin-left: 20px;
 	}
 }
 

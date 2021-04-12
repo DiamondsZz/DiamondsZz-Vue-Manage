@@ -1,6 +1,14 @@
 <template>
 	<div class="upload">
+		<div class="items" v-if="fileList.length">
+			<div class="item" v-for="(item, i) in fileList" :key="i">
+				<a-avatar shape="square" :size="64" :src="item.src"> </a-avatar>
+				<a-icon type="close-circle" class="item-delete" @click="imgDelete(i)" />
+			</div>
+		</div>
+
 		<a-upload
+			v-if="fileList.length < 6"
 			name="file"
 			:action="config.upSite"
 			:data="{ token: config.token }"
@@ -8,21 +16,7 @@
 			:beforeUpload="beforeUpload"
 			@change="uploadChange"
 		>
-			<div
-				v-if="asset"
-				class="upload-img"
-				:style="{
-					backgroundImage: `url(${
-						isVideo ? require('@/assets/images/video.png') : asset
-					})`
-				}"
-			></div>
-			<div class="upload-icon">
-				<a-icon
-					:type="loading ? 'loading' : 'plus'"
-					style="color: #d5d4d4; fontsize: 14px"
-				/>
-			</div>
+			<a-icon :type="loading ? 'loading' : 'plus'" style="color: #d5d4d4; fontsize: 14px" />
 		</a-upload>
 	</div>
 </template>
@@ -43,9 +37,7 @@ export default {
 			// 七牛云配置
 			config: {},
 			loading: false,
-			asset: '',
-			//是否视频
-			isVideo: false
+			fileList: []
 		}
 	},
 	methods: {
@@ -76,8 +68,8 @@ export default {
 				return false
 			}
 			//文件类型限制
-			if (!(fileType.includes('image') || fileType.includes('video'))) {
-				this.$message.warning('只支持图片和视频上传')
+			if (!fileType.includes('image')) {
+				this.$message.warning('只支持图片上传')
 				return false
 			}
 
@@ -94,55 +86,63 @@ export default {
 			if (info.file.status === 'done') {
 				this.loading = false
 				if (info.file.response && info.file.response.hash) {
-					this.isVideo = info.file.type === 'video/mp4'
-					this.asset = `${this.config.site}/${info.file.response.hash}`
-					this.$emit('uploadSuccess', { asset: this.asset, isVideo: this.isVideo })
+					this.fileList.push({
+						src: `${this.config.site}/${info.file.response.hash}`
+					})
+					this.$emit('uploadSuccess', this.fileList)
 				}
 			}
 		},
+		//图片删除
+		imgDelete(i) {
+			this.fileList.splice(i, 1)
+		},
 		initial() {
-			this.isVideo = this.initialValue.isVideo
-			this.asset = this.initialValue.value
+			this.fileList = this.initialValue.value || []
 		}
 	},
 	watch: {
 		//监听初始值
 		initialValue(initial) {
-			this.isVideo = initial.isVideo
-			this.asset = initial.value
+			this.fileList = initial.value
 		}
 	},
 	created() {
 		//获取七牛云token
 		this.getSevenCattleToken()
 		this.initial()
-		console.log(this.initialValue)
 	}
 }
 </script>
 
 <style lang="less" scoped>
 .upload {
-	position: relative;
-	width: 80px;
-	height: 80px;
-	border-radius: 6px;
-	border: 1px solid #d5d4d4;
+	display: flex;
+	.items {
+		display: flex;
+		align-items: center;
+		/deep/ .ant-avatar {
+			margin-right: 20px;
+		}
+		.item {
+			position: relative;
+			.item-delete {
+				position: absolute;
+				top: -5px;
+				right: 15px;
+			}
+		}
+	}
+	/deep/ .ant-upload-select {
+		border: 1px solid #d5d4d4;
+	}
 	/deep/ .ant-upload {
-		.upload-img {
-			background-size: cover;
-			background-repeat: no-repeat;
-			background-position: center;
-			width: 80px;
-			height: 80px;
-			padding: 2px;
-		}
-		.upload-icon {
-			position: absolute;
-			top: 40%;
-			left: 40%;
-			cursor: pointer;
-		}
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		width: 68px;
+		height: 68px;
+		border-radius: 6px;
 	}
 }
 </style>

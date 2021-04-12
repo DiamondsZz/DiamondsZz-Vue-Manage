@@ -13,7 +13,9 @@
 			<div class="modal-text" v-if="modalText">{{ modalText }}</div>
 			<div slot="footer" class="modal-footer">
 				<a-button class="modal-footer-btn" @click="cancel">取消</a-button>
-				<a-button class="modal-footer-btn" @click="confirm">确定</a-button>
+				<a-button class="modal-footer-btn" :loading="modalLoading" @click="confirm"
+					>确定</a-button
+				>
 			</div>
 		</a-modal>
 	</div>
@@ -22,7 +24,7 @@
 <script>
 import { mountModal } from '@/utils/common'
 export default {
-	props: ['visible', 'mountDom', 'text'],
+	props: ['visible', 'mountDom', 'text', 'loading'],
 	data() {
 		return {
 			// 弹窗显示
@@ -30,7 +32,9 @@ export default {
 			// 弹窗挂在Dom
 			modalMountDom: null,
 			// 弹窗文本
-			modalText: ''
+			modalText: '',
+			//弹窗加载状态
+			modalLoading: false
 		}
 	},
 	methods: {
@@ -59,10 +63,17 @@ export default {
 			},
 			immediate: true
 		},
-		// 弹窗挂在Dom
+		// 弹窗挂载Dom
 		mountDom: {
 			handler(val) {
 				this.modalMountDom = val
+			},
+			immediate: true
+		},
+		// 加载状态
+		loading: {
+			handler(val) {
+				this.modalLoading = val
 			},
 			immediate: true
 		}

@@ -146,18 +146,18 @@ export default {
 					icon: 'system',
 					path: '/systemSet'
 				},
-				{
-					name: '活动设置',
-					key: 'activity',
-					icon: 'system',
-					path: '/activity'
-				},
-				{
-					name: '礼金设置',
-					key: 'gift',
-					icon: 'system',
-					path: '/gift'
-				},
+				// {
+				// 	name: '活动设置',
+				// 	key: 'activity',
+				// 	icon: 'system',
+				// 	path: '/activity'
+				// },
+				// {
+				// 	name: '礼金设置',
+				// 	key: 'gift',
+				// 	icon: 'system',
+				// 	path: '/gift'
+				// },
 
 				{
 					name: '发群消息/朋友圈',
@@ -166,25 +166,31 @@ export default {
 					path: '/send'
 				},
 
+				// {
+				// 	name: '采集发送日志',
+				// 	key: 'log',
+				// 	icon: 'send',
+				// 	path: '/log',
+				// 	children: [
+				// 		{
+				// 			name: '采集列表',
+				// 			key: 'logCollect',
+				// 			icon: 'send',
+				// 			path: '/log/collect'
+				// 		},
+				// 		{
+				// 			name: '发单列表',
+				// 			key: 'logSend',
+				// 			icon: 'device',
+				// 			path: '/log/send'
+				// 		}
+				// 	]
+				// },
 				{
-					name: '采集发送日志',
-					key: 'log',
+					name: '客服系统',
+					key: 'chat',
 					icon: 'send',
-					path: '/log',
-					children: [
-						{
-							name: '采集列表',
-							key: 'logCollect',
-							icon: 'send',
-							path: '/log/collect'
-						},
-						{
-							name: '发单列表',
-							key: 'logSend',
-							icon: 'device',
-							path: '/log/send'
-						}
-					]
+					path: '/chat'
 				}
 			],
 			// 当前菜单选项
@@ -214,6 +220,7 @@ export default {
 
 <style lang="less" scoped>
 .menu {
+	padding-bottom: 40px;
 	/deep/ .ant-menu-inline-collapsed {
 		.menu-item {
 			span {

@@ -72,11 +72,10 @@ export default {
 .layout {
 	.layout-sider {
 		min-height: 100vh;
-		padding-bottom: 40px;
 	}
 
 	/deep/ .ant-layout {
-		min-width: 1200px;
+		min-width: 1400px;
 		.layout-header {
 			display: flex;
 			justify-content: space-between;
